@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.V1.Controllers;
+namespace Api.V0.Controllers;
 
 [Produces(MediaTypeNames.Application.Json)]
 [Consumes(MediaTypeNames.Application.Json)]
@@ -24,7 +24,7 @@ public class VehiclesController : ControllerBase
   public async Task<IActionResult> Distribute([FromRoute] string vehiclePlate)
   {
     _logger.LogInformation("VehiclePlate: {vehiclePlate}", vehiclePlate);
-    return Ok($"{vehiclePlate}");
+    return Ok();
   }
 
   [ApiExplorerSettings(IgnoreApi = true)]

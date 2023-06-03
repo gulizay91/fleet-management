@@ -1,4 +1,4 @@
-namespace Api.Configurations;
+namespace Api.Registrations;
 
 public static class LoggerRegister
 {

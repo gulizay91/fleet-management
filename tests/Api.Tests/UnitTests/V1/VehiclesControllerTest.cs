@@ -1,10 +1,11 @@
 using Api.V1.Controllers;
 using FluentAssertions;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 
-namespace Api.Tests.UnitTests;
+namespace Api.Tests.UnitTests.V1;
 
 public class VehiclesControllerTest
 {
@@ -30,7 +31,7 @@ public class VehiclesControllerTest
   public async Task Distribute_ShouldReturn200Status()
   {
     // Act
-    var result = (OkResult)await _sut.Distribute("34TL34");
+    var result = (OkObjectResult)await _sut.Distribute("34TL34");
 
     // Assert
     result.StatusCode.Should().Be(200);

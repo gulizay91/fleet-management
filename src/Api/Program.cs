@@ -1,4 +1,3 @@
-using Api.Configurations;
 using Api.Registrations;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 

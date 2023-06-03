@@ -12,7 +12,7 @@ Steps to build a Docker image:
 
 1. Clone this repo
 ```sh
-        git clone https://github.com/gulizay91/fleet-management.git
+git clone https://github.com/gulizay91/fleet-management.git
 ```
 
 2. Run docker compose
