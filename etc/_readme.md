@@ -1,33 +1,10 @@
-# Fleet Management
+<h1 align="left"> Fleet Management </h1>
 
-In this application, a small fleet management system where vehicles carry shipments and deliver them to predetermined locations along a specific route.
-
-## Tech
-* .NET 7
-* UnitTest : XUnit, Moq, FluentAssertions
-
-## Getting Started
-
-Steps to build a Docker image:
-
-1. Clone this repo
-```sh
-        git clone https://github.com/gulizay91/fleet-management.git
-```
-
-2. Run docker compose
-
-```sh
-docker-compose up -d
-```
-
-3. Send health check
-
-```sh
-curl -L -X GET 'http://localhost:8080/health'
-```
+<h3 align="left">Backend Application </h3>
 
 ### Description
+
+In this application, we want you to design a small fleet management system where vehicles carry shipments and deliver them to predetermined locations along a specific route.
 
 The system has two different types of shipments that can be transported in vehicles and unloaded at delivery points. Delivery points where the shipments will go, the barcodes of the shipments and the desi (size of the shipments) are stored on the shipment.
 
@@ -202,7 +179,48 @@ that receives the following example json content for the vehicle to distribute t
   ]
 }
 ~~~~
+## Testing
+
+We expect you to
+- Push your code to the `master` branch.
+- Place your `docker-compose.yml` file in the root folder of the repository.
+- Implement your API in a way that requests and responses are identical to the example provided. For example, `34TL34` is not equal to `34 TL 34`.
+
+#### We run an automated test pipeline before the code-review process to check if your API endpoints return expected responses. If your code fails in this phase, you will not be able to proceed to the next phases.
 
 
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
+**Scenario**
+
+This scenario will be run by our reviewers during the review process. Make sure that these steps work as exactly same without any additional steps !
+ 1. Clone project
+ > git clone {repository-git-url}
+ 2. Run docker compose file (docker-compose.yml) and expose your service on port 8080
+ > docker-compose up -d
+ 3. Send a health check request and receive HttpStatus 200
+ > curl -L -X GET 'http://localhost:8080/health'
+ 4. Send the same request written above to distribute endpoint and receive the same response written above
+ > curl -L -X POST 'http://localhost:8080/v1/vehicles/34TL34/distribute' -H 'Content-Type: application/json' --data-raw '{...}'
+
+**Results**
+
+- When downloading packages to delivery points, we expect you to log the Delivery Point - Barcode pairs sent incorrectly in the json above. We expect you to log it in a table you will create yourself.
+- We expect you to show the status of unloaded and not unloaded records on the database.
+- We expect the shipment with barcode P8988000120 to remain in "Created" state.
+- We are waiting for a log for barcodes P8988000121 and C725799 (due to attempted delivery to the wrong location).
+- We expect barcode P8988000121 to remain in the "Loaded" state.
+- We expect sack C725800 to be in the "Unloaded" state.
+- We expect barcode P8988000122 to be in the "Unloaded" state.
+- We expect barcode P8988000126 to be in the "Unloaded" state.
+
+## Expectations
+
+In addition to the requirements written above, we highly expect you to follow the items listed below; 
+  
+- Publish a running project
+- Apply SOLID and OOP principles
+- Document your project for a developer
+- Handle exceptions for resilient web service
+- Focus on high coverage rate by taking [test pyramid](https://martinfowler.com/articles/practical-test-pyramid.html) into consideration (Unit tests, Integration Tests etc.)
+- Make sure to apply same programming principles into your test packages and classes
+- Test Driven Development is advised
+- Commit to a local git repository and include the git repository (.git/) in the upload
