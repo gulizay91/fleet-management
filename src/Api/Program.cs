@@ -1,3 +1,4 @@
+using Api.Middlewares;
 using Api.Registrations;
 using Infrastructure;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -44,7 +45,9 @@ void RegisterServices(IServiceCollection serviceCollection, IConfiguration confi
 async Task ConfigureWebApplication(IApplicationBuilder applicationBuilder)
 {
   var provider = applicationBuilder.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
-  applicationBuilder.UseExceptionHandler();
+  applicationBuilder
+    .UseMiddleware<
+      ExceptionHandlerMiddleware>();
   applicationBuilder.UseRouting();
   applicationBuilder.UseEndpoints(endpoints => { endpoints.MapControllers(); });
   applicationBuilder.RegisterHealthCheck();

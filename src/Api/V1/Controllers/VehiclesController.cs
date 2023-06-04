@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net.Mime;
+using Api.Middlewares;
 using Api.Services;
 using Api.V1.Exchanges.Requests;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,7 @@ namespace Api.V1.Controllers;
 
 [Produces(MediaTypeNames.Application.Json)]
 [Consumes(MediaTypeNames.Application.Json)]
-[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+[ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
 [ApiController]
 [Route("v{version:apiVersion}/vehicles")]
 public class VehiclesController : ControllerBase
