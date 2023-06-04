@@ -12,7 +12,7 @@ Console.WriteLine("Services Registered...");
 
 var app = builder.Build();
 
-ConfigureWebApplication(app);
+await ConfigureWebApplication(app);
 
 app.Run();
 
@@ -33,14 +33,15 @@ void RegisterServices(IServiceCollection serviceCollection, IConfiguration confi
 {
   serviceCollection.AddHealthChecks();
   serviceCollection.AddProblemDetails();
-  serviceCollection.RegisterLoggers(configurationRoot);
   serviceCollection.RegisterSwagger();
+  serviceCollection.RegisterLoggers(configurationRoot);
+  serviceCollection.RegisterControllers();
+  serviceCollection.RegisterService();
 }
 
-void ConfigureWebApplication(IApplicationBuilder applicationBuilder)
+async Task ConfigureWebApplication(IApplicationBuilder applicationBuilder)
 {
   var provider = applicationBuilder.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
-  //applicationBuilder.UseHttpsRedirection();
   applicationBuilder.UseExceptionHandler();
   applicationBuilder.UseRouting();
   applicationBuilder.UseEndpoints(endpoints => { endpoints.MapControllers(); });
@@ -53,4 +54,7 @@ void ConfigureWebApplication(IApplicationBuilder applicationBuilder)
       options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
         description.GroupName.ToUpperInvariant());
   });
+
+  Console.WriteLine("Seeding Database...");
+  await applicationBuilder.RegisterSeedData();
 }

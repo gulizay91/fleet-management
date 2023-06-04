@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net.Mime;
+using Api.Services;
+using Api.V1.Exchanges.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.V1.Controllers;
@@ -12,19 +14,22 @@ namespace Api.V1.Controllers;
 public class VehiclesController : ControllerBase
 {
   private readonly ILogger<VehiclesController> _logger;
+  private readonly IRouteService _routeService;
 
-  public VehiclesController(ILogger<VehiclesController> logger)
+  public VehiclesController(ILogger<VehiclesController> logger, IRouteService routeService)
   {
     _logger = logger;
+    _routeService = routeService;
   }
 
   [HttpPost("{vehiclePlate}/distribute")]
   [ProducesResponseType(typeof(ValidationResult), StatusCodes.Status400BadRequest)]
   [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-  public async Task<IActionResult> Distribute([FromRoute] string vehiclePlate)
+  public async Task<IActionResult> Distribute([FromRoute] string vehiclePlate, [FromBody] DistributeRequest request)
   {
     _logger.LogInformation("VehiclePlate: {vehiclePlate}", vehiclePlate);
-    return Ok($"{vehiclePlate}");
+    var result = await _routeService.Distribute(vehiclePlate, request);
+    return Ok(result);
   }
 
   [ApiExplorerSettings(IgnoreApi = true)]
