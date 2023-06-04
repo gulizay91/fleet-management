@@ -18,8 +18,6 @@ public class ConfigureSwaggerOptions
 
   public void Configure(SwaggerGenOptions options)
   {
-    // add a swagger document for each discovered Order.Api version
-    // note: you might choose to skip or document deprecated Order.Api versions differently
     foreach (var description in _provider.ApiVersionDescriptions)
       options.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
   }

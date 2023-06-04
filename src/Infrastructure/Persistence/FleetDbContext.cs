@@ -9,7 +9,7 @@ public sealed class FleetDbContext : DbContext
 {
   public FleetDbContext(DbContextOptions<FleetDbContext> options) : base(options)
   {
-    //Database.EnsureDeleted();
+    Database.EnsureDeleted();
     Database.EnsureCreated();
   }
 
@@ -65,6 +65,7 @@ internal class PackageEntityTypeConfiguration : IEntityTypeConfiguration<Package
     entityBuilder.HasKey(t => t.Id);
     entityBuilder.Property(t => t.Id).ValueGeneratedOnAdd();
     entityBuilder.HasIndex(t => t.Barcode).IsUnique();
+    entityBuilder.Property(t => t.Desi).HasPrecision(10,2);
     //entityBuilder.Property("SackId").IsRequired(false); // shadow
     entityBuilder.Property(t => t.State).HasConversion<int>().IsRequired().IsConcurrencyToken();
     // entityBuilder.HasOne(t => t.Sack)

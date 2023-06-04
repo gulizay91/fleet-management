@@ -1,3 +1,5 @@
+using Infrastructure.Persistence;
+
 namespace Api.Registrations;
 
 public static class SeedDataRegister
@@ -6,9 +8,9 @@ public static class SeedDataRegister
   {
     var scopedFactory = applicationBuilder.ApplicationServices.GetService<IServiceScopeFactory>();
 
-    // using var scope = scopedFactory!.CreateScope();
-    // var service = scope.ServiceProvider.GetService<FleetDbContextSeed>();
-    // if(service is not null)
-    //   await service.Seed();
+    using var scope = scopedFactory!.CreateScope();
+    var service = scope.ServiceProvider.GetService<FleetDbContextSeed>();
+    if(service is not null)
+      await service.Seed();
   }
 }

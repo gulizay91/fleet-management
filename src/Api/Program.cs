@@ -1,4 +1,5 @@
 using Api.Registrations;
+using Infrastructure;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,6 +38,7 @@ void RegisterServices(IServiceCollection serviceCollection, IConfiguration confi
   serviceCollection.RegisterLoggers(configurationRoot);
   serviceCollection.RegisterControllers();
   serviceCollection.RegisterService();
+  serviceCollection.RegisterRepositories(configurationRoot);
 }
 
 async Task ConfigureWebApplication(IApplicationBuilder applicationBuilder)

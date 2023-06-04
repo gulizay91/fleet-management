@@ -16,7 +16,7 @@ public class Package : IShipment, IEntity<Guid>, IAggregateRoot
 
   public int State { get; private set; }
   public decimal Desi { get; private set; }
-  public Sack? Sack { get; }
+  public Sack? Sack { get; protected set; }
   public Guid Id { get; init; }
   public string Barcode { get; init; }
   public DeliveryPoint DeliveryPoint { get; protected set; }

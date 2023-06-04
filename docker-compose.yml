@@ -1,4 +1,14 @@
 ﻿services:
+  sql-db:
+    image: "mcr.microsoft.com/azure-sql-edge"
+    ports:
+      - "1433:1433"
+    container_name: sqlserver-fleet-management
+    environment:
+      MSSQL_USER: "sa"
+      MSSQL_DB: "fleet-management"
+      MSSQL_SA_PASSWORD: "P@ssw0rd123!"
+      ACCEPT_EULA: "1"
   api:
     image: api
     build:
@@ -9,3 +19,7 @@
       - "8080:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Default=Server=sql-db;Database=fleet-management;User Id=sa;Password=P@ssw0rd123!;TrustServerCertificate=True;
+      - ConnectionStrings__UseInMemory=true
+    depends_on:
+      - sql-db
